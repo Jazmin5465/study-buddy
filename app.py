@@ -47,6 +47,10 @@ def get_messages():
             }
             for msg in thread_messages.data
         ]
+        # if thread_messages.data[0].content[0].text.annotations:
+        #     pattern = r'【\d:0+†source】'
+        #     message = re.sub(pattern, '', message)
+
         return jsonify(success=True, messages=messages)
 
 # Create the assistant
@@ -84,16 +88,16 @@ def index():
 def chat():
     user_input = request.json["message"]
     
-    moderation_result = client.moderations.create(
-        input = user_input
-    )
-    while moderation_result.results[0].flagged == True:
-        moderation_result = client.moderations.create(
-        input = user_input
-        )
+    # moderation_result = client.moderations.create(
+    #     input = user_input
+    # )
+    # while moderation_result.results[0].flagged == True:
+    #     moderation_result = client.moderations.create(
+    #     input = user_input
+    #     )
  
-        chat_history.append({"role": "assistant", "content": user_input})
-        return jsonify(success=True, message="Assistant: Sorry, your message violated our community guidelines. Please try another prompt.")
+    #     chat_history.append({"role": "assistant", "content": user_input})
+    #     return jsonify(success=True, message="Assistant: Sorry, your message violated our community guidelines. Please try another prompt.")
    
     chat_history.append({"role": "user", "content": user_input})
     
